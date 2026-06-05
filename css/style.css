@@ -56,3 +56,101 @@ footer {
   background: #5a3a2e;
   color: #f7e6d2;
 }
+
+/* 🌟 Gallery Grid */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+/* 📷 Gallery images */
+.gallery-grid img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.03);
+}
+
+/* 🎞️ Slideshow Hero Gallery */
+.slideshow {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  background: #5a3a2e;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* optional overlay for samba vibe */
+.slideshow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.2),
+    rgba(0,0,0,0.4)
+  );
+}
+
+/* Countdown */
+
+.countdown-section {
+  text-align: center;
+  padding: 60px 20px;
+  background: #5a3a2e;
+  color: #f7e6d2;
+}
+
+.countdown-section h2 {
+  color: #f4a201;
+  margin-bottom: 25px;
+}
+
+#countdown {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.countdown-item {
+  min-width: 90px;
+}
+
+.countdown-item span {
+  display: block;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ed2f11;
+}
+
+.countdown-item small {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#next-event-title {
+  margin-top: 25px;
+  font-size: 1.2rem;
+}

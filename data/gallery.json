@@ -1,10 +1,14 @@
 [
   {
     "image": "assets/images/event1.jpg",
-    "caption": "Live gig"
+    "caption": "Samba at the pub"
   },
   {
     "image": "assets/images/event2.jpg",
     "caption": "Festival performance"
+  },
+  {
+    "image": "assets/images/event3.jpg",
+    "caption": "Street parade energy"
   }
 ]
