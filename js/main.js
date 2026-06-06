@@ -52,57 +52,48 @@ fetch('data/gallery.json')
 
   // Next Gig Countdown
 
-  fetch('data/events.json')
-    .then(res => res.json())
-    .then(events => {
+fetch('./data/events.json')
+  .then(r => r.json())
+  .then(events => {
 
-      if (!events.length) return;
+    if (!events.length) return;
 
-      const event = events[0];
+ const now = new Date();
 
-      document.getElementById('next-event-title').textContent =
-        `${event.title} • ${event.location}`;
+ const futureEvents = events
+   .map(event => ({
+     ...event,
+     eventDate: new Date(`${event.date}T${event.time}:00`)
+   }))
+   .filter(event => event.eventDate > now)
+   .sort((a, b) => a.eventDate - b.eventDate);
 
-      const eventDate = new Date(`${event.date} ${event.time}`);
+ if (!futureEvents.length) return;
 
-      function updateCountdown() {
+ const event = futureEvents[0];
+ document.getElementById('next-event-title').textContent =
+   `${event.title} • ${event.location}`;
+ const eventDate = event.eventDate;
 
-        const now = new Date();
-        const diff = eventDate - now;
+    function updateCountdown() {
 
-        if (diff <= 0) {
+      const diff = eventDate.getTime() - Date.now();
 
-          document.getElementById('countdown').innerHTML =
-            '<h3>🥁 We are playing now!</h3>';
+      if (diff <= 0) return;
 
-          return;
-        }
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
 
-        const hours = Math.floor(
-          (diff % (1000 * 60 * 60 * 24))
-          / (1000 * 60 * 60)
-        );
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 
-        const minutes = Math.floor(
-          (diff % (1000 * 60 * 60))
-          / (1000 * 60)
-        );
-
-        const seconds = Math.floor(
-          (diff % (1000 * 60))
-          / 1000
-        );
-
-        document.getElementById('days').textContent = days;
-        document.getElementById('hours').textContent = hours;
-        document.getElementById('minutes').textContent = minutes;
-        document.getElementById('seconds').textContent = seconds;
-      }
-
-      updateCountdown();
-
-      setInterval(updateCountdown, 1000);
-
-    });
+  })
+  .catch(console.error);
